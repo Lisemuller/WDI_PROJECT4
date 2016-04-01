@@ -1,0 +1,19 @@
+{
+  "name": "worldie",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Lise Muller <lisemuller@hotmail.fr>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Lisemuller/WDI_PROJECT4",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ]
+}
