@@ -1,7 +1,8 @@
 angular
-  .module('WorldieApp', ['ngResource', 'ui.router', 'angular-jwt'])
+  .module('WorldieApp', ['ngResource', 'ui.router', 'angular-jwt','satellizer'])
   .constant('API', 'http://localhost:3000/api')
   .config(Router)
+  .config(oauthConfig);
 
   Router.$inject = ['$stateProvider', '$urlRouterProvider'];
   function Router($stateProvider, $urlRouterProvider) {
@@ -11,6 +12,15 @@ angular
         templateUrl: '/views/index.ejs'
       })
 
-
     $urlRouterProvider.otherwise('/');
+  }
+
+  oauthConfig.$inject = ['API', '$authProvider', 'FACEBOOK_API_KEY'];
+  function oauthConfig(API, $authProvider, FACEBOOK_API_KEY) {
+    $authProvider.facebook({
+      url: API + '/auth/facebook',
+      clientId: FACEBOOK_API_KEY
+    });
+
+    $authProvider.tokenPrefix = null;
   }
