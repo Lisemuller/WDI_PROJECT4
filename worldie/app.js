@@ -7,6 +7,7 @@ var mongoose       = require('mongoose');
 var app            = express();
 var PORT           = process.env.PORT || 3000;
 var router         = require('./config/routes');
+var cors           = require('cors');
 
 // Set default view engine and views directory
 app.set("view engine", "ejs");
@@ -26,6 +27,7 @@ var routes         = require('./config/routes');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 app.use('/api', router);
 

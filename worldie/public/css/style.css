@@ -130,4 +130,9 @@ button.play:hover {
     right: 0px
   }
 
+
+  #street-view {
+    width: 600px;
+    height: 450px;
+  }
  

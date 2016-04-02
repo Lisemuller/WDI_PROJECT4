@@ -12,12 +12,15 @@
   <script src="/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>  
   <script src="/vendor/angular-jwt/dist/angular-jwt.min.js"></script> 
   <script src="/vendor/satellizer/satellizer.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q&callback=initMap"
+        async defer></script>
 
 
 
   <!-- Internal JS Resources -->
   <script src="/js/client.js"></script>
   <script src="/js/controllers/users.js"></script>
+  <script src="/js/controllers/positions.js"></script>
   <script src="/js/services/oauthKeys.js"></script>
   <script src="/js/services/token.js"></script>
 
@@ -44,13 +47,15 @@
     <div class="logout" ng-click="user.logout()">Logout</div>
   </nav>
   <img ng-src="{{ user.currentUser.picture }}">
-  <button class="play" ui-sref="play">Let's Play</button>
+
+<!--   <div ng-controller="PositionsController as position"> -->
+<button class="play" ng-click="showmap = !showmap" >Let's play</button>
+  <div ng-show="showmap">
+    <div id="street-view"></div>
+  </div>
   </div>
 
-  <main ui-view class="container">
-  
 
-  </main>
 
 
 </body>
