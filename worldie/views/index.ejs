@@ -27,21 +27,31 @@
 
 </head>
 <body ng-controller="UserController as user">
+<div ng-hide="user.isLoggedIn()">
   <div class="centered">
-    <div ng-hide="user.isLoggedIn()">
       <h1>Satellizer</h1>
       <h3>Oauth for Facebook</h3>
       <hr>
       <button class="facebook" ng-click="user.authenticate('facebook')"><i class="fa fa-facebook-square"></i> Sign in with Facebook</button>
     </div>
-
-    <div ng-show="user.isLoggedIn()">
-      <img ng-src="{{ user.currentUser.picture }}">
-      <h2>{{ user.currentUser.name }}</h2>
-      <hr>
-      <button class="logout" ng-click="user.logout()"><i class="fa fa-sign-out"></i> Logout</button>
-    </div>
   </div>
+
+
+<div ng-show="user.isLoggedIn()">
+  <nav>
+    <div class="navhome">Home Hello</div>
+    <div class="navcart">{{ user.currentUser.name}}</div>
+    <div class="logout" ng-click="user.logout()">Logout</div>
+  </nav>
+  <img ng-src="{{ user.currentUser.picture }}">
+  <button class="play" ui-sref="play">Let's Play</button>
+  </div>
+
+  <main ui-view class="container">
+  
+
+  </main>
+
 
 </body>
 </html>

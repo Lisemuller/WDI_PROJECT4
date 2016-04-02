@@ -11,7 +11,10 @@ angular
         url: '/',
         templateUrl: '/views/index.ejs'
       })
-
+      .state('play', {
+        url: '/play',
+        templateUrl: '/views/play.ejs'
+      })
     $urlRouterProvider.otherwise('/');
   }
 
