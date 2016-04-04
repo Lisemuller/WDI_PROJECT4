@@ -12,8 +12,7 @@
   <script src="/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>  
   <script src="/vendor/angular-jwt/dist/angular-jwt.min.js"></script> 
   <script src="/vendor/satellizer/satellizer.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q&callback=initMap"
-        async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q"></script>
 
 
 
@@ -23,6 +22,7 @@
   <script src="/js/controllers/positions.js"></script>
   <script src="/js/services/oauthKeys.js"></script>
   <script src="/js/services/token.js"></script>
+  <script src="/js/models/position.js"></script>
 
   <!-- Style -->
   <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
@@ -40,7 +40,7 @@
   </div>
 
 
-<div ng-show="user.isLoggedIn()">
+<div>
   <nav>
     <div class="navhome">Home Hello</div>
     <div class="navcart">{{ user.currentUser.name}}</div>
@@ -48,12 +48,12 @@
   </nav>
   <img ng-src="{{ user.currentUser.picture }}">
 
-<!--   <div ng-controller="PositionsController as position"> -->
-<button class="play" ng-click="showmap = !showmap" >Let's play</button>
-  <div ng-show="showmap">
+  <div ng-controller="PositionsController as position">
+<!-- <button class="play" ng-click="showmap = !showmap" >Let's play</button> -->
+ <!--  <div ng-show="showmap"> -->
     <div id="street-view"></div>
   </div>
-  </div>
+</div>
 
 
 
