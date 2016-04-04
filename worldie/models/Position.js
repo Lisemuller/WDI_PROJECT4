@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var positionSchema = mongoose.Schema({
   lat: { type: Number, required: true },
   lng: { type: Number, required: true },
+  country: {type: String},
 });
 
 positionSchema.set('toJSON', {

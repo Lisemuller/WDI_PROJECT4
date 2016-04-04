@@ -18,45 +18,60 @@ function PositionsController($window, Position){
   self.all = [];
   Position.query(function(positions) {
     self.all = positions;
-    
 
-  
+  var country;
+
+  var index = [Math.floor(Math.random()*self.all.length)];
 
   function getPanorama(){
     var panorama = new google.maps.StreetViewPanorama(document.getElementById('street-view'), {
-      position: getLatLng(self.all[Math.floor(Math.random()*self.all.length)]),
+      position: getLatLng(self.all[index]),
       pov: {heading: 165, pitch: 0},
       zoom: 1,
       addressControl: false,
       linksControl: false,
     }); 
 
-    var lat = panorama.position.lat()
-    var lng = panorama.position.lng()
+  country = (self.all[index]).country;
+  console.log(country);  
 
+  var text;
 
-    var geocoder = new google.maps.Geocoder;
-    var latlng = {lat: lat , lng: lng };
-          console.log(latlng);
-          geocoder.geocode({'location': latlng}, function(results, status) {
-            if (status === google.maps.GeocoderStatus.OK) {
-              if (results[1]) {
-                var marker = new google.maps.Marker({
-                  position: latlng });
-                var country = (results[1].formatted_address);
-              } else {
-                window.alert('No results found');
-              }
-            } else {
-              window.alert('Geocoder failed due to: ' + status);
-            }
-            console.log(country);
-          });
+  function matchCountry(text, country) {
+    console.log(text);
+    console.log(country);
+    if (country === text){
+      console.log("Well done !")
+    } else {
+      console.log("Sorry, please try again");
+    }
+    };
   }
 
-getPanorama();
-    
 
+    getPanorama(); 
+
+    console.log(country)
+
+    var text;
+
+    function matchCountry(text, country) {
+      console.log(text);
+      console.log(country);
+      if (country === text){
+        console.log("Well done !")
+      } else {
+        console.log("Sorry, please try again");
+      }
+      };
+
+    $('#new-country-form').on("submit", function(event) {
+      event.preventDefault();
+      var text = $("#new-country-input").val();
+      $("#new-country-input").val("");
+      matchCountry(text, country); 
+    });
+    
   });
 
 }
