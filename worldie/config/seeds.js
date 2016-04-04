@@ -6,8 +6,8 @@ mongoose.connect('mongodb://localhost/wordie');
 Position.collection.drop();
 
 Position.create([{
-  lat: 47.869260,
-  lng: -150.254811,
+  lat: 41.005855,
+  lng: 28.976835,
 },{
   lat: 22.818777,
   lng: 89.547000,

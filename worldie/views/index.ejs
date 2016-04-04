@@ -40,7 +40,7 @@
   </div>
 
 
-<div>
+<div ng-show="user.isLoggedIn()">
   <nav>
     <div class="navhome">Home Hello</div>
     <div class="navcart">{{ user.currentUser.name}}</div>
@@ -52,6 +52,14 @@
 <!-- <button class="play" ng-click="showmap = !showmap" >Let's play</button> -->
  <!--  <div ng-show="showmap"> -->
     <div id="street-view"></div>
+  </div>
+
+
+  <div id="screen">00:00</div>
+    <form id="new-country-form" class="input-group">
+    <input class="form-control" id="new-country-input" autocomplete="off" class="hidden" placeholder="Enter country name here">
+    </form>
+
   </div>
 </div>
 
