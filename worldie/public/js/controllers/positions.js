@@ -6,9 +6,8 @@ PositionsController.$inject = ['$window','Position'];
 function PositionsController($window, Position){
 
   var self = this;
-  var time = 30;
+  var time = 10;
   var timer;
-  var player = 1;
   var player1 = 0;
 
   function getLatLng(position) {
@@ -21,8 +20,13 @@ function PositionsController($window, Position){
     self.all = positions;
 
     var country;
+    var city;
     // get a random street view from the seeds
     function getPanorama(){
+      $('#next').addClass('hidden');
+      $("#new-country-input").val("");
+      $('#new-city-input').addClass('hidden');
+      $('#new-city-input').val("");
       var index = [Math.floor(Math.random()*self.all.length)];
       var panorama = new google.maps.StreetViewPanorama(document.getElementById('street-view'), {
         position: getLatLng(self.all[index]),
@@ -35,32 +39,52 @@ function PositionsController($window, Position){
     country = (self.all[index]).country;
     console.log(country);  
 
-    }
+    city = (self.all[index]).city;
+    console.log(city);  
 
+    }
 
     getPanorama(); 
 
     console.log(country)
 
     var text;
-    // check if the answer is correct
+    var text2;
+    // check if the answer country is correct
     function matchCountry(text, country) {
-      console.log(text);
-      console.log(country);
+      console.log("USERS TEXT", text);
+      console.log("RANDOM COUNTRY", country);
       if (country === text){
-        console.log("Well done !")
-          if(player === 1) {
-            player1++;
-            time === 0;
-            getPanorama();
-          } 
+        console.log("Well done !");
+        player1++;
+        $('#next').removeClass('hidden');
+        $("#new-country-input").val(text);
+        $('#new-city-input').removeClass('hidden');
+
       } else {
         console.log("Sorry, please try again");
       }
-      $('.score1').text("Player 1 - "+ player1);
+
+      $('.score1').text("Player  - "+ player1);
 
       };
 
+    // check if the answer city is correct
+    function matchCity(text2,city) { 
+      if (city  === text2){
+        console.log("Well done !");
+        player1++;
+        $("#new-city-input").val(text2);
+        getPanorama();
+      } else {
+        console.log("Sorry, wrong city")
+      }
+      $('.score1').text("Player  - "+ player1);
+      };
+
+
+
+    // take the input in the box of country and run the function that compares it with the seeds
     $('#new-country-form').on("submit", function(event) {
       event.preventDefault();
       var text = $("#new-country-input").val();
@@ -68,7 +92,15 @@ function PositionsController($window, Position){
       matchCountry(text, country); 
     });
 
+    // take the input in the box of country and run the function that compares it with the seeds
+    $('#new-city-form').on("submit", function(event) {
+      event.preventDefault();
+      var text2 = $("#new-city-input").val();
+      $("#new-city-input").val("");
+      matchCity(text2, city);
+    });
 
+  // start the big clock 
     function startClock() {
       console.log("start clock");
       var display = $('#screen');
@@ -77,6 +109,8 @@ function PositionsController($window, Position){
       // text box only shows when timer starts
       $('#screen').removeClass('hidden');
       $('#new-country-input').removeClass('hidden');
+
+
       timer = setInterval(function(){
         time -= 1;
 
@@ -89,24 +123,31 @@ function PositionsController($window, Position){
         display.text(minutes + ":" + seconds);
         
         if(time === 0) {
-          clearInterval(timer)
+          console.log("Play Again");
+          $('#screen').addClass('hidden');
+          $('.welcome-screen').removeClass('hidden');
+          $("#new-country-input").addClass('hidden');
           getPanorama();
-          time = 30;
-
         }
       }, 1000)
     }
+
     //Button click starts the timer and makes the button disapear
     $('.play').on("click", function() {
       $('.welcome-screen').addClass('hidden');
+      time = 10;
       startClock();
-      setTimeout(function() {
-       console.log("Time out !")
-      }, 180000); 
     }); 
     
+    //Button click starts the new panorama and makes the button disapear 
+    $('#next').on("click", function(){
+      getPanorama();
+    });
+
   });
 
 }
+
+
 
 

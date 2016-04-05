@@ -57,14 +57,20 @@
 <!-- <button class="play" ng-click="showmap = !showmap" >Let's play</button> -->
  <!--  <div ng-show="showmap"> -->
     <div id="street-view"></div>
+    <div id='progressbar'></div>
   </div>
 
 
-  <div id="screen" class="hidden">00:00</div>
-    <form id="new-country-form" class="input-group">
-    <input class="form-control hidden" id="new-country-input" autocomplete="off" placeholder="Enter country name here">
-    </form>
-</div>
+ <div id="screen" class="hidden">00:00</div>
+  <form id="new-country-form" class="input-group">
+  <input class="form-control hidden" id="new-country-input" autocomplete="off" placeholder="Enter country name here">
+  </form>
+
+  <form id="new-city-form" class="input-group">
+  <input class="form-control hidden" id="new-city-input" autocomplete="off" placeholder="Enter city name here">
+  </form>
+
+
 
 <div class="welcome-screen">
   <h1>World !</h1>
@@ -72,6 +78,9 @@
   <button class="play">Start</button>
 </div>
 
+  <button class="hidden" id="next">Next</button>
+
+</div>
 
 
 

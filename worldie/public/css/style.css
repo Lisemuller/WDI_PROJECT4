@@ -104,6 +104,16 @@ button.play {
 button.play:hover {
   background: #386150; }
 
+
+button#next {
+  background: #58B09C;
+  border: 1px solid #3e578c; }
+}
+
+button#next:hover {
+  background: #386150; }
+
+
   nav {
     height: 80px;
     background-color: #597ea1;
