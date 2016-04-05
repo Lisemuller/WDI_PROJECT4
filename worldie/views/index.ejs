@@ -48,6 +48,11 @@
   </nav>
   <img ng-src="{{ user.currentUser.picture }}">
 
+  <div class="scores">
+    <div class="score1"></div>
+  </div>
+
+
   <div ng-controller="PositionsController as position">
 <!-- <button class="play" ng-click="showmap = !showmap" >Let's play</button> -->
  <!--  <div ng-show="showmap"> -->
@@ -55,13 +60,18 @@
   </div>
 
 
-  <div id="screen">00:00</div>
+  <div id="screen" class="hidden">00:00</div>
     <form id="new-country-form" class="input-group">
-    <input class="form-control" id="new-country-input" autocomplete="off" class="hidden" placeholder="Enter country name here">
+    <input class="form-control hidden" id="new-country-input" autocomplete="off" placeholder="Enter country name here">
     </form>
-
-  </div>
 </div>
+
+<div class="welcome-screen">
+  <h1>World !</h1>
+  <h3>Find where you are in the world ! </h3>
+  <button class="play">Start</button>
+</div>
+
 
 
 
