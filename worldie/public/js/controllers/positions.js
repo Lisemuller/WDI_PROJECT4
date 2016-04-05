@@ -2,11 +2,11 @@ angular
   .module('WorldieApp')
   .controller('PositionsController', PositionsController)
 
-PositionsController.$inject = ['$window','Position'];
-function PositionsController($window, Position){
+PositionsController.$inject = ['$window','$scope','Position'];
+function PositionsController($window, $scope, Position){
 
   var self = this;
-  var time = 10;
+  var time = 180;
   var timer;
   var player1 = 0;
 
@@ -18,6 +18,8 @@ function PositionsController($window, Position){
 
   Position.query(function(positions) {
     self.all = positions;
+
+    
 
     var country;
     var city;
@@ -100,53 +102,64 @@ function PositionsController($window, Position){
       matchCity(text2, city);
     });
 
+    self.showscreen = true;
+    self.newcountryinput = true;
+
+
   // start the big clock 
-    function startClock() {
-      console.log("start clock");
-      var display = $('#screen');
+  self.startClock = function() {
+    console.log("start clock");
+    self.showscreen = false;
+    self.newcountryinput = false;
 
 
-      // text box only shows when timer starts
-      $('#screen').removeClass('hidden');
-      $('#new-country-input').removeClass('hidden');
+    timer = setInterval(function(){
+      time -= 1;
 
+      minutes = Math.floor(time / 60);
+      seconds = time % 60;
 
-      timer = setInterval(function(){
-        time -= 1;
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      
+      if(time === 0) {
+        console.log("Play Again");
+        self.showscreen = true;
+        $('.welcome-screen').removeClass('hidden');
+        self.newcountryinput = false;
+        getPanorama();
+      }
 
-        minutes = Math.floor(time / 60);
-        seconds = time % 60;
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.text(minutes + ":" + seconds);
-        
-        if(time === 0) {
-          console.log("Play Again");
-          $('#screen').addClass('hidden');
-          $('.welcome-screen').removeClass('hidden');
-          $("#new-country-input").addClass('hidden');
-          getPanorama();
+      if (time > 0){
+          $('.progress-bar').css('width', time+'px');
+        } else {
+          clearTimeout(timer);
         }
-      }, 1000)
-    }
+
+    }, 1000)
+  }
+    
+      
+
+
+    
 
     //Button click starts the timer and makes the button disapear
-    $('.play').on("click", function() {
-      $('.welcome-screen').addClass('hidden');
-      time = 10;
-      startClock();
-    }); 
+    // $('.play').on("click", function() {
+    //   $('.welcome-screen').addClass('hidden');
+    //   time = 100;
+    //   startClock();
+    // }); 
     
     //Button click starts the new panorama and makes the button disapear 
-    $('#next').on("click", function(){
-      getPanorama();
-    });
+    // $('#next').on("click", function(){
+    //   getPanorama();
+    // });
 
   });
 
 }
+
 
 
 

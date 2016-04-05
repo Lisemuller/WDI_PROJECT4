@@ -1,7 +1,7 @@
 var Position = require('../models/position');
 
 function positionsIndex(req, res) {
-  Position.find(function(err, positions) {
+  Position.find(req.query, function(err, positions) {
     if(err) return res.status(500).json({ message: err });
     return res.status(200).json(positions);
   });

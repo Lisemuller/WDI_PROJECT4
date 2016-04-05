@@ -4,7 +4,7 @@ var positionSchema = mongoose.Schema({
   lat: { type: Number, required: true },
   lng: { type: Number, required: true },
   country: {type: String},
-  city: {type:String},
+  city: {type:String}
 });
 
 positionSchema.set('toJSON', {
