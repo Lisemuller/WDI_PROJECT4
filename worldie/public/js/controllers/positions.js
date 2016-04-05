@@ -6,7 +6,7 @@ PositionsController.$inject = ['$window','$scope','Position'];
 function PositionsController($window, $scope, Position){
 
   var self = this;
-  var time = 180;
+  var time = 100;
   var timer;
   var player1 = 0;
 
@@ -19,16 +19,20 @@ function PositionsController($window, $scope, Position){
   Position.query(function(positions) {
     self.all = positions;
 
-    
+  self.showscreen = true;
+  self.newcountryinput = true;
+  self.newcityinput = true;
+  self.welcomescreen = false;
+  self.next = true;
+
 
     var country;
     var city;
     // get a random street view from the seeds
-    function getPanorama(){
-      $('#next').addClass('hidden');
-      $("#new-country-input").val("");
-      $('#new-city-input').addClass('hidden');
-      $('#new-city-input').val("");
+    self.getPanorama = function(){
+      self.countryinput = "";
+      self.cityinput = "";
+      self.next = true;
       var index = [Math.floor(Math.random()*self.all.length)];
       var panorama = new google.maps.StreetViewPanorama(document.getElementById('street-view'), {
         position: getLatLng(self.all[index]),
@@ -42,68 +46,92 @@ function PositionsController($window, $scope, Position){
     console.log(country);  
 
     city = (self.all[index]).city;
-    console.log(city);  
+    console.log(city); 
+
+      // check if the answer country is correct
+     self.matchCountry = function(country) {
+        console.log("USERS TEXT", self.countryinput);
+        console.log("RANDOM COUNTRY", country);
+        if (country === self.countryinput){
+          console.log("Well done !");
+          player1++;
+          self.next = false;
+          self.newcityinput = false;
+
+        } else {
+          console.log("Sorry, please try again");
+        }
+
+        $('.score1').text("Player  - "+ player1);
+
+        };
+
+      // check if the answer city is correct
+    self.matchCity = function(city) { 
+        if (city  === self.cityinput){
+          console.log("Well done !");
+          player1++;
+          self.getPanorama();
+        } else {
+          console.log("Sorry, wrong city")
+        }
+        $('.score1').text("Player  - "+ player1);
+        }; 
 
     }
 
-    getPanorama(); 
+    self.getPanorama(); 
 
-    console.log(country)
+    // console.log(country)
 
-    var text;
-    var text2;
-    // check if the answer country is correct
-    function matchCountry(text, country) {
-      console.log("USERS TEXT", text);
-      console.log("RANDOM COUNTRY", country);
-      if (country === text){
-        console.log("Well done !");
-        player1++;
-        $('#next').removeClass('hidden');
-        $("#new-country-input").val(text);
-        $('#new-city-input').removeClass('hidden');
 
-      } else {
-        console.log("Sorry, please try again");
-      }
+  //   // check if the answer country is correct
+  //  self.matchCountry = function(country) {
+  //     console.log("USERS TEXT", self.countryinput);
+  //     console.log("RANDOM COUNTRY", country);
+  //     if (country === self.countryinput){
+  //       console.log("Well done !");
+  //       player1++;
+  //       self.next = false;
+  //       self.newcityinput = false;
 
-      $('.score1').text("Player  - "+ player1);
+  //     } else {
+  //       console.log("Sorry, please try again");
+  //     }
 
-      };
+  //     $('.score1').text("Player  - "+ player1);
 
-    // check if the answer city is correct
-    function matchCity(text2,city) { 
-      if (city  === text2){
-        console.log("Well done !");
-        player1++;
-        $("#new-city-input").val(text2);
-        getPanorama();
-      } else {
-        console.log("Sorry, wrong city")
-      }
-      $('.score1').text("Player  - "+ player1);
-      };
+  //     };
+
+  //   // check if the answer city is correct
+  // self.matchCity = function(city) { 
+  //     if (city  === self.cityinput){
+  //       console.log("Well done !");
+  //       player1++;
+  //       self.getPanorama();
+  //     } else {
+  //       console.log("Sorry, wrong city")
+  //     }
+  //     $('.score1').text("Player  - "+ player1);
+  //     };
 
 
 
-    // take the input in the box of country and run the function that compares it with the seeds
-    $('#new-country-form').on("submit", function(event) {
-      event.preventDefault();
-      var text = $("#new-country-input").val();
-      $("#new-country-input").val("");
-      matchCountry(text, country); 
-    });
+    // // take the input in the box of country and run the function that compares it with the seeds
+    // $('#new-country-form').on("submit", function(event) {
+    //   event.preventDefault();
+    //   var text = $("#new-country-input").val();
+    //   $("#new-country-input").val("");
+    //   matchCountry(text, country); 
+    // });
 
-    // take the input in the box of country and run the function that compares it with the seeds
-    $('#new-city-form').on("submit", function(event) {
-      event.preventDefault();
-      var text2 = $("#new-city-input").val();
-      $("#new-city-input").val("");
-      matchCity(text2, city);
-    });
-
-    self.showscreen = true;
-    self.newcountryinput = true;
+    // // take the input in the box of country and run the function that compares it with the seeds
+    // $('#new-city-form').on("submit", function(event) {
+    //   event.preventDefault();
+    //   var text2 = $("#new-city-input").val();
+    //   $("#new-city-input").val("");
+    //   matchCity(text2, city);
+    // });
 
 
   // start the big clock 
@@ -111,6 +139,7 @@ function PositionsController($window, $scope, Position){
     console.log("start clock");
     self.showscreen = false;
     self.newcountryinput = false;
+    self.welcomescreen = true;
 
 
     timer = setInterval(function(){
@@ -125,13 +154,14 @@ function PositionsController($window, $scope, Position){
       if(time === 0) {
         console.log("Play Again");
         self.showscreen = true;
-        $('.welcome-screen').removeClass('hidden');
+        self.welcomescreen = false;
+
         self.newcountryinput = false;
-        getPanorama();
+        self.getPanorama();
       }
 
       if (time > 0){
-          $('.progress-bar').css('width', time+'px');
+          $('.progress-bar').css('width', time+'%');
         } else {
           clearTimeout(timer);
         }
@@ -139,22 +169,7 @@ function PositionsController($window, $scope, Position){
     }, 1000)
   }
     
-      
 
-
-    
-
-    //Button click starts the timer and makes the button disapear
-    // $('.play').on("click", function() {
-    //   $('.welcome-screen').addClass('hidden');
-    //   time = 100;
-    //   startClock();
-    // }); 
-    
-    //Button click starts the new panorama and makes the button disapear 
-    // $('#next').on("click", function(){
-    //   getPanorama();
-    // });
 
   });
 

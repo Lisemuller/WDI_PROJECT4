@@ -58,30 +58,30 @@
  <!--  <div ng-show="showmap"> -->
     <div id="street-view"></div>
     <div class="progress">
-      <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+      <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
         <span class="sr-only">60% Complete</span>
       </div>
     </div>
 
 
  <div id="screen" class="ng-hide" ng-hide="position.showscreen">{{ position.timer}}</div>
-  <form id="new-country-form" class="input-group">
-  <input class="form-control ng-hide" id="position.newcountryinput" autocomplete="off" placeholder="Enter country name here">
+  <form id="new-country-form" class="input-group" ng-submit="position.matchCountry()">
+  <input class="form-control ng-hide" ng-hide="position.newcountryinput" autocomplete="off" placeholder="Enter country name here" ng-model="position.countryinput">
   </form>
 
   <form id="new-city-form" class="input-group">
-  <input class="form-control hidden" id="new-city-input" autocomplete="off" placeholder="Enter city name here">
+  <input class="form-control ng-hide" ng-hide="position.newcityinput" autocomplete="off" placeholder="Enter city name here" ng-model="position.cityinput">
   </form>
 
 
 
-<div class="welcome-screen">
+<div id="welcomescreen" class="ng-hide" ng-hide="position.welcomescreen">
   <h1>World !</h1>
   <h3>Find where you are in the world ! </h3>
   <button ng-click="position.startClock()"class="play">Start</button>
 </div>
 
-  <button class="hidden" id="next">Next</button>
+  <button class="next ng-hide" ng-hide="position.next" ng-click="position.getPanorama()">Next</button>
 
 </div>
 

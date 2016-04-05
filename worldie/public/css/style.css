@@ -105,12 +105,12 @@ button.play:hover {
   background: #386150; }
 
 
-button#next {
+button.next {
   background: #58B09C;
   border: 1px solid #3e578c; }
 }
 
-button#next:hover {
+button.next:hover {
   background: #386150; }
 
 
