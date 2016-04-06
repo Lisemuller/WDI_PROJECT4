@@ -2,10 +2,12 @@ angular
   .module('WorldieApp')
   .controller('UserController', UserController);
 
-UserController.$inject = ['$auth', 'tokenService'];
-function UserController($auth, tokenService) {
+UserController.$inject = ['$auth', 'tokenService','User'];
+function UserController($auth, tokenService, User) {
 
-  var self = this;
+
+  this.all = User.query();
+
 
   this.isLoggedIn = function() {
     return !!tokenService.getToken();

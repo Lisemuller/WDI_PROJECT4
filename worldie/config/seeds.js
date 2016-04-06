@@ -30,7 +30,9 @@ Position.create([{
   lng: 106.911599,
   country: "Mongolia",
   city: "Oulan-Bator",
-}], function(err, positions) {
+}]
+
+, function(err, positions) {
   if(err) console.error(err);
   else console.log(positions);
   mongoose.connection.close();

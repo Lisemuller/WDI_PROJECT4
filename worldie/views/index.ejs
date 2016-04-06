@@ -23,6 +23,7 @@
   <script src="/js/services/oauthKeys.js"></script>
   <script src="/js/services/token.js"></script>
   <script src="/js/models/position.js"></script>
+  <script src="/js/models/user.js"></script>
 
   <!-- Style -->
   <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
@@ -48,20 +49,20 @@
     </nav>
     <img ng-src="{{ user.currentUser.picture }}">
 
-
     <div ng-controller="PositionsController as position">
 
     <div class="scores">
       <div class="score1">Player - {{ position.playerScore }}</div>
     </div>
 
-      <div id="street-view"></div>
-      <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-        <span class="sr-only">60% Complete</span>
-        </div>
+    <div id="street-view"></div>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+      <span class="sr-only">60% Complete</span>
       </div>
+    </div>
 
+    <li ng-repeat="user in user.all"><strong>{{user.name}}</strong></li>
 
       <div id="screen" class="ng-hide" ng-hide="position.showscreen">{{ position.timer}}</div>
 

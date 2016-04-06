@@ -12,6 +12,7 @@ function PositionsController($window, $scope, Position){
   var player1 = 0;
 
   self.playerScore = 0;
+  var score = [];
 
   function getLatLng(position) {
     return new google.maps.LatLng(position.lat, position.lng);
@@ -47,6 +48,7 @@ function PositionsController($window, $scope, Position){
     self.getPanorama = function(){
       self.countryinput = "";
       self.cityinput = "";
+      self.newcityinput = true;
       self.next = true;
       var index = [Math.floor(Math.random()*self.all.length)];
       var panorama = new google.maps.StreetViewPanorama(document.getElementById('street-view'), {
@@ -127,6 +129,8 @@ function PositionsController($window, $scope, Position){
 
         self.newcountryinput = false;
         self.getPanorama();
+        score.push(self.playerScore);
+        console.log(score);
       }
 
       if (time > 0){
