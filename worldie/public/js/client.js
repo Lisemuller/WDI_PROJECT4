@@ -1,5 +1,5 @@
 angular
-  .module('WorldieApp', ['ngResource', 'ui.router', 'angular-jwt','satellizer'])
+  .module('WorldieApp', ['ngResource', 'ui.router', 'angular-jwt','satellizer', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
   .constant('API', 'http://localhost:3000/api')
   .config(oauthConfig);
 

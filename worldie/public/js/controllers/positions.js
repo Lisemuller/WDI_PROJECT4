@@ -50,6 +50,10 @@ function PositionsController($window, $scope, Position){
 
       // check if the answer country is correct
      self.matchCountry = function(country) {
+
+        country = (self.all[index]).country;
+        console.log(country);  
+
         console.log("USERS TEXT", self.countryinput);
         console.log("RANDOM COUNTRY", country);
         if (country === self.countryinput){
@@ -68,6 +72,10 @@ function PositionsController($window, $scope, Position){
 
       // check if the answer city is correct
     self.matchCity = function(city) { 
+
+      city = (self.all[index]).city;
+      console.log("this",city); 
+
         if (city  === self.cityinput){
           console.log("Well done !");
           player1++;
@@ -81,57 +89,6 @@ function PositionsController($window, $scope, Position){
     }
 
     self.getPanorama(); 
-
-    // console.log(country)
-
-
-  //   // check if the answer country is correct
-  //  self.matchCountry = function(country) {
-  //     console.log("USERS TEXT", self.countryinput);
-  //     console.log("RANDOM COUNTRY", country);
-  //     if (country === self.countryinput){
-  //       console.log("Well done !");
-  //       player1++;
-  //       self.next = false;
-  //       self.newcityinput = false;
-
-  //     } else {
-  //       console.log("Sorry, please try again");
-  //     }
-
-  //     $('.score1').text("Player  - "+ player1);
-
-  //     };
-
-  //   // check if the answer city is correct
-  // self.matchCity = function(city) { 
-  //     if (city  === self.cityinput){
-  //       console.log("Well done !");
-  //       player1++;
-  //       self.getPanorama();
-  //     } else {
-  //       console.log("Sorry, wrong city")
-  //     }
-  //     $('.score1').text("Player  - "+ player1);
-  //     };
-
-
-
-    // // take the input in the box of country and run the function that compares it with the seeds
-    // $('#new-country-form').on("submit", function(event) {
-    //   event.preventDefault();
-    //   var text = $("#new-country-input").val();
-    //   $("#new-country-input").val("");
-    //   matchCountry(text, country); 
-    // });
-
-    // // take the input in the box of country and run the function that compares it with the seeds
-    // $('#new-city-form').on("submit", function(event) {
-    //   event.preventDefault();
-    //   var text2 = $("#new-city-input").val();
-    //   $("#new-city-input").val("");
-    //   matchCity(text2, city);
-    // });
 
 
   // start the big clock 
