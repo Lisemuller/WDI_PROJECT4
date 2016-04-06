@@ -5,10 +5,13 @@ angular
 PositionsController.$inject = ['$window','$scope','Position'];
 function PositionsController($window, $scope, Position){
 
+
   var self = this;
   var time = 100;
   var timer;
   var player1 = 0;
+
+  self.playerScore = 0;
 
   function getLatLng(position) {
     return new google.maps.LatLng(position.lat, position.lng);
@@ -26,8 +29,20 @@ function PositionsController($window, $scope, Position){
   self.next = true;
 
 
-    var country;
-    var city;
+  var country;
+  var city;
+   
+  var input = (document.getElementById('country'));
+    var options = {
+          types: ['(regions)']
+      };
+
+  self.initAutocomplete = function() {
+    var autocomplete = new google.maps.places.Autocomplete(input, options)
+    console.log(autocomplete)
+  }
+
+
     // get a random street view from the seeds
     self.getPanorama = function(){
       self.countryinput = "";
@@ -58,15 +73,13 @@ function PositionsController($window, $scope, Position){
         console.log("RANDOM COUNTRY", country);
         if (country === self.countryinput){
           console.log("Well done !");
-          player1++;
+          self.playerScore ++;
           self.next = false;
           self.newcityinput = false;
 
         } else {
           console.log("Sorry, please try again");
         }
-
-        $('.score1').text("Player  - "+ player1);
 
         };
 
@@ -78,12 +91,11 @@ function PositionsController($window, $scope, Position){
 
         if (city  === self.cityinput){
           console.log("Well done !");
-          player1++;
+          self.playerScore ++;
           self.getPanorama();
         } else {
           console.log("Sorry, wrong city")
         }
-        $('.score1').text("Player  - "+ player1);
         }; 
 
     }
