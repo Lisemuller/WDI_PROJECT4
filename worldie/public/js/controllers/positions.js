@@ -89,6 +89,9 @@ function PositionsController($window, $scope, Position, Score, tokenService){
     self.next = function() {
       self.currentPlace = getRandomPlace();
       panorama.setPosition(getLatLng(self.currentPlace));
+      self.newcountryinput = true;
+      self.newcityinput = true;
+      self.next = true;
     }
 
   }

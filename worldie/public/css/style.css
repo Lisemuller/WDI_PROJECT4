@@ -30,6 +30,30 @@ h1 {
   margin: 0;
 }
 
+.topscreen{
+  position: relative;
+  top: 0;
+  height:220px;
+  z-index: 3;
+}
+
+nav {
+  height: 200px;
+  width: 100vw !important;
+  position: relative;
+  left: 0vw;
+  z-index: 3;
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  // padding: 15px;
+  margin: 0;
+}
+
+
+#block{
+  display: inline-block;
+  vertical-align: top;
+}
 
 img.pp {
   position: relative;
@@ -37,6 +61,36 @@ img.pp {
   margin-top: 40px;
   max-width: 125px;
   border-radius: 100%; }
+
+.imagecontainer{
+  display: inline-block;
+  float: left;
+  margin-left: 70px;
+  text-align: center;
+}
+
+.logout {
+  display: block;
+  margin-top: 27px;
+}
+
+#userscore {
+  color: white;
+  z-index: 2;
+  position:relative;
+  margin-top: -94px;
+  font-size: 50px;
+}
+
+.scores {
+  margin-top: 40px;
+  float: right;
+  overflow-y: scroll;
+  height: 150px;
+  margin-right: 70px;
+}
+
+
 
 button {
   border: 0;
@@ -77,42 +131,6 @@ button.next:hover {
   background: #386150; }
 
 
-nav {
-  height: 200px;
-  width: 100vw !important;
-  position: relative;
-  left: 0vw;
-  z-index: 3;
-  background-color: rgba(255, 255, 255, 0.8);
-  text-align: center;
-  // padding: 15px;
-  margin: 0;
-}
-
-nav div {
-  display: inline-block;
-  height: 100%;
-  width: 150px;
-  text-align: center;
-  line-height: 80px;
-  color: #f5f5f5;
-
-}
-
-nav div:hover {
-  background-color: #4e7090;
-}
-
-
-.logout {
-  position: absolute;
-  right: 0px
-}
-
-.infocontainer {
-  position: relative;
-  z-index: 1;
-}
 
 #street-view {
   height: 100%; 
@@ -121,6 +139,11 @@ nav div:hover {
   top: 0; 
   left: 0; 
   z-index: 0;
+}
+
+#welcomescreen{
+  position: relative;
+  z-index: 3;
 }
 
 #locationField, #controls {
@@ -160,11 +183,6 @@ nav div:hover {
 #locationField {
   height: 20px;
   margin-bottom: 2px;
-}
-
-.background {
-  width: 100%;
-  height: 100%;
 }
 
 .error {
