@@ -69,6 +69,10 @@ img.pp {
   text-align: center;
 }
 
+.instruction{
+  margin-top: 40px;
+}
+
 .logout {
   display: block;
   margin-top: 27px;
@@ -87,9 +91,20 @@ img.pp {
   float: right;
   overflow-y: scroll;
   height: 150px;
+  width: 300px;
   margin-right: 70px;
+ /* border: 1px solid #415b93;*/
+  color: #415b93;
 }
 
+.answercontainer{
+  margin-top: 40px;
+  margin-left: 147px;
+}
+
+p{
+  color: #415b93;
+}
 
 
 button {
@@ -142,6 +157,12 @@ button.next:hover {
 }
 
 #welcomescreen{
+  position: relative;
+  z-index: 3;
+  margin-top: 180px;
+}
+
+.next{
   position: relative;
   z-index: 3;
 }

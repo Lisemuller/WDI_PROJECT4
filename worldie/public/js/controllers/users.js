@@ -11,6 +11,7 @@ function UserController($auth, tokenService, User) {
 
   this.isLoggedIn = function() {
     return !!tokenService.getToken();
+    $route.reload();
   }
 
   this.currentUser = tokenService.getUser();
@@ -25,6 +26,7 @@ function UserController($auth, tokenService, User) {
   this.logout = function() {
     tokenService.removeToken();
     this.currentUser = null;
+    
   }
 
 }

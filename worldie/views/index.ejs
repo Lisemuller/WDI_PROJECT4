@@ -13,7 +13,7 @@
   <script src="/vendor/angular-jwt/dist/angular-jwt.min.js"></script>
   <script src="/vendor/satellizer/satellizer.min.js"></script>
   <script src="/vendor/jquery-panorama/jquery.panorama_viewer.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q&libraries=places&sensor=false&language=en"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q&libraries=places&language=en"></script>
 
 
 
@@ -59,21 +59,31 @@
             <a class="logout" href="" ng-click="user.logout()">Log Out</a>
           </div>
           <div class="scores" id="block"> 
-            <li ng-repeat="score in position.scores"><strong>{{ score.user.name }} - {{ score.score }}</strong></li>
+            <ul class="list-group">
+              <li class="list-group-item"><h3>Best Scores</h3></li>
+              <li class="list-group-item" ng-repeat="score in position.scores"><strong>{{ score.user.name }}</strong><span class="badge">{{ score.score }}</span></li>
+            </ul>
           </div>
 
           <div class="answercontainer" id="block">
 
-          <input class="form-control" ng-hide="position.newcountryinput" placeholder="Enter country name here" ng-model="position.countryinput" type="text" place-changed="position.matchCountry()" types="['(regions)']" googleplace>
-        
+            <input class="form-control" ng-hide="position.newcountryinput" placeholder="Enter country name here" ng-model="position.countryinput" type="text" place-changed="position.matchCountry()" types="['(regions)']" googleplace>
+          
 
-          <div class="error ng-hide" ng-hide="position.errormessage">  
-            <p>Wrong country, try again to go to the next panorama</p>
+            <div class="error ng-hide alert alert-warning" role="alert" ng-hide="position.errormessage">  
+              <p>Wrong country, try again to go to the next panorama</p>
+            </div>
+      
+            <input class="form-control" ng-hide="position.newcityinput" placeholder="Enter city name here" ng-model="position.cityinput" type="text" place-changed="position.matchCity()" types="['(cities)']" googleplace>
+
+            <div class="errorcity ng-hide alert alert-warning" role="alert" ng-hide="position.errormessagecity">
+              <p>Wrong city, try again or click next to try to guess a new country</p>
+            </div>
+
           </div>
 
-        
-          <input class="form-control" ng-hide="position.newcityinput" placeholder="Enter city name here" ng-model="position.cityinput" type="text" place-changed="position.matchCity()" types="['(cities)']" googleplace>
-
+          <div class="instruction" ng-hide="position.instruction" id="block">
+            <p>Try to ..........</p>
           </div>
 
         </nav>
@@ -89,12 +99,11 @@
     
 
         <div id="welcomescreen" class="ng-hide" ng-hide="position.welcomescreen">
-          <h1>World !</h1>
-          <h3>Find where you are in the world ! </h3>
+          <h1>Landmark</h1>
           <button ng-click="position.startClock()"class="play">Start</button>
         </div>
 
-        <button class="next ng-hide" ng-hide="position.next" ng-click="position.next()">Next</button>
+        <button class="next" ng-hide="position.nextbutton" ng-click="position.next()">Next</button>
 
         <button class="logout" ng-click="user.logout()">Logout</button>
 

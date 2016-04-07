@@ -1,7 +1,7 @@
 var Score = require('../models/score');
 
 function ScoresIndex(req, res) {
-  Score.find(req.query).populate('user').limit(10).sort('score').exec(function(err, scores) {
+  Score.find(req.query, null, { sort: '-score' }).populate('user').limit(10).exec(function(err, scores) {
     if(err) return res.status(500).json({ message: err });
     return res.status(200).json(scores);
   });

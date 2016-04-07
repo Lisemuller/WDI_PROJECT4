@@ -21,14 +21,17 @@ function PositionsController($window, $scope, Position, Score, tokenService){
   self.all = [];
 
   Position.query(function(positions) {
+    console.log(self.scores);
     self.all = positions;
 
     self.showscreen = true;
     self.newcountryinput = true;
     self.newcityinput = true;
     self.welcomescreen = false;
-    self.next = true;
+    self.instruction = false;
+    self.nextbutton = true;
     self.errormessage = true;
+    self.errormessagecity = true;
     self.currentPlace = getRandomPlace();
 
     function getRandomPlace() {
@@ -49,7 +52,7 @@ function PositionsController($window, $scope, Position, Score, tokenService){
     self.countryinput = "";
     self.cityinput = "";
     self.newcityinput = true;
-    self.next = true;
+    self.nextbutton = true;
 
     // check if the answer country is correct
     self.matchCountry = function() {
@@ -60,12 +63,14 @@ function PositionsController($window, $scope, Position, Score, tokenService){
       if (country === self.countryinput){
         console.log("Well done !");
         self.playerScore ++;
-        self.next = false;
+        self.nextbutton = false;
         self.newcityinput = false;
+        self.errormessage = true;
       } else {
         console.log("Sorry, please try again");
         self.errormessage = false;
         self.countryinput = "";
+        self.newcityinput = true;
       }
 
     };
@@ -81,21 +86,24 @@ function PositionsController($window, $scope, Position, Score, tokenService){
         self.playerScore ++;
         self.currentPlace = getRandomPlace();
         panorama.setPosition(getLatLng(self.currentPlace));
+        self.cityinput="";
+        self.countryinput="";
       } else {
         console.log("Sorry, wrong city")
+        self.errormessagecity = false;
+        self.cityinput = "";
+
       }
     }; 
 
-    self.next = function() {
-      self.currentPlace = getRandomPlace();
-      panorama.setPosition(getLatLng(self.currentPlace));
-      self.newcountryinput = true;
-      self.newcityinput = true;
-      self.next = true;
-    }
-
   }
 
+  self.next = function() {
+    self.countryinput="";
+    self.cityinput="";
+    self.currentPlace = getRandomPlace();
+    panorama.setPosition(getLatLng(self.currentPlace));
+  }
 
     self.Play(); 
 
@@ -106,6 +114,9 @@ function PositionsController($window, $scope, Position, Score, tokenService){
       self.showscreen = false;
       self.newcountryinput = false;
       self.welcomescreen = true;
+      self.instruction = true;
+      self.currentPlace = getRandomPlace();
+      panorama.setPosition(getLatLng(self.currentPlace));
 
 
       timer = setInterval(function(){
@@ -119,14 +130,17 @@ function PositionsController($window, $scope, Position, Score, tokenService){
         
         if(time === 0) {
           console.log("Play Again");
+          self.errormessage = true;
+          self.errormessagecity = true;
           self.showscreen = true;
           self.welcomescreen = false;
           self.newcountryinput = true;
           self.currentPlace = getRandomPlace();
           panorama.setPosition(getLatLng(self.currentPlace));
+          self.Play();
           Score.save({ score: self.playerScore, user: tokenService.getUser()._id }, function(savedScore){
             $scope.$applyAsync(function() {
-              self.scores.push({ score: self.playerScore, user: tokenService.getUser() });
+              self.scores = Score.query();
             });
           });
         }
