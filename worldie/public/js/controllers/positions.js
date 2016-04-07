@@ -28,81 +28,73 @@ function PositionsController($window, $scope, Position, Score, tokenService){
     self.newcityinput = true;
     self.welcomescreen = false;
     self.next = true;
+    self.errormessage = true;
+    self.currentPlace = getRandomPlace();
 
-
-    var country;
-    var city;
-   
-    var input = (document.getElementById('country'));
-    var options = {
-      types: ['(regions)']
+    function getRandomPlace() {
+      return self.all[Math.floor(Math.random() * self.all.length)];
     };
 
-    self.initAutocomplete = function() {
-      var autocomplete = new google.maps.places.Autocomplete(input, options)
-      console.log(autocomplete)
-    }
-
-
     // get a random street view from the seeds
-    self.getPanorama = function(){
-      self.countryinput = "";
-      self.cityinput = "";
-      self.newcityinput = true;
-      self.next = true;
-      var index = [Math.floor(Math.random()*self.all.length)];
-      var panorama = new google.maps.StreetViewPanorama(document.getElementById('street-view'), {
-        position: getLatLng(self.all[index]),
-        pov: {heading: 165, pitch: 0},
-        zoom: 1,
-        addressControl: false,
-        linksControl: false,
-      }); 
+    var panorama = new google.maps.StreetViewPanorama(document.getElementById('street-view'), {
+      position: getLatLng(self.currentPlace),
+      pov: {heading: 165, pitch: 0},
+      zoom: 1,
+      addressControl: false,
+      linksControl: false,
+    });
 
-      country = (self.all[index]).country;
-      console.log(country);  
+  self.Play = function() {
+    time = 100;
+    self.countryinput = "";
+    self.cityinput = "";
+    self.newcityinput = true;
+    self.next = true;
 
-      city = (self.all[index]).city;
-      console.log(city); 
+    // check if the answer country is correct
+    self.matchCountry = function() {
+      country = self.currentPlace.country;
 
-      // check if the answer country is correct
-      self.matchCountry = function(country) {
+      console.log("USERS TEXT", self.countryinput);
+      console.log("RANDOM COUNTRY", country);
+      if (country === self.countryinput){
+        console.log("Well done !");
+        self.playerScore ++;
+        self.next = false;
+        self.newcityinput = false;
+      } else {
+        console.log("Sorry, please try again");
+        self.errormessage = false;
+        self.countryinput = "";
+      }
 
-        country = (self.all[index]).country;
-        console.log(country);  
+    };
 
-        console.log("USERS TEXT", self.countryinput);
-        console.log("RANDOM COUNTRY", country);
-        if (country === self.countryinput){
-          console.log("Well done !");
-          self.playerScore ++;
-          self.next = false;
-          self.newcityinput = false;
+    // check if the answer city is correct
+    self.matchCity = function() { 
 
-        } else {
-          console.log("Sorry, please try again");
-        }
+      city = self.currentPlace.city;
+      console.log("this",city); 
 
-      };
+      if (!!self.cityinput.match(city)){
+        console.log("Well done !");
+        self.playerScore ++;
+        self.currentPlace = getRandomPlace();
+        panorama.setPosition(getLatLng(self.currentPlace));
+      } else {
+        console.log("Sorry, wrong city")
+      }
+    }; 
 
-      // check if the answer city is correct
-      self.matchCity = function(city) { 
-
-        city = (self.all[index]).city;
-        console.log("this",city); 
-
-        if (city  === self.cityinput){
-          console.log("Well done !");
-          self.playerScore ++;
-          self.getPanorama();
-        } else {
-          console.log("Sorry, wrong city")
-        }
-      }; 
-
+    self.next = function() {
+      self.currentPlace = getRandomPlace();
+      panorama.setPosition(getLatLng(self.currentPlace));
     }
 
-    self.getPanorama(); 
+  }
+
+
+    self.Play(); 
 
 
     // start the big clock 
@@ -126,9 +118,9 @@ function PositionsController($window, $scope, Position, Score, tokenService){
           console.log("Play Again");
           self.showscreen = true;
           self.welcomescreen = false;
-
-          self.newcountryinput = false;
-          self.getPanorama();
+          self.newcountryinput = true;
+          self.currentPlace = getRandomPlace();
+          panorama.setPosition(getLatLng(self.currentPlace));
           Score.save({ score: self.playerScore, user: tokenService.getUser()._id }, function(savedScore){
             $scope.$applyAsync(function() {
               self.scores.push({ score: self.playerScore, user: tokenService.getUser() });
