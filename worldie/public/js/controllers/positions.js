@@ -2,9 +2,8 @@ angular
   .module('WorldieApp')
   .controller('PositionsController', PositionsController)
 
-PositionsController.$inject = ['$window','$scope','Position'];
-function PositionsController($window, $scope, Position){
-
+PositionsController.$inject = ['$window','$scope','Position', 'Score', 'tokenService'];
+function PositionsController($window, $scope, Position, Score, tokenService){
 
   var self = this;
   var time = 100;
@@ -12,7 +11,8 @@ function PositionsController($window, $scope, Position){
   var player1 = 0;
 
   self.playerScore = 0;
-  var score = [];
+
+  self.scores = Score.query();
 
   function getLatLng(position) {
     return new google.maps.LatLng(position.lat, position.lng);
@@ -23,25 +23,25 @@ function PositionsController($window, $scope, Position){
   Position.query(function(positions) {
     self.all = positions;
 
-  self.showscreen = true;
-  self.newcountryinput = true;
-  self.newcityinput = true;
-  self.welcomescreen = false;
-  self.next = true;
+    self.showscreen = true;
+    self.newcountryinput = true;
+    self.newcityinput = true;
+    self.welcomescreen = false;
+    self.next = true;
 
 
-  var country;
-  var city;
+    var country;
+    var city;
    
-  var input = (document.getElementById('country'));
+    var input = (document.getElementById('country'));
     var options = {
-          types: ['(regions)']
-      };
+      types: ['(regions)']
+    };
 
-  self.initAutocomplete = function() {
-    var autocomplete = new google.maps.places.Autocomplete(input, options)
-    console.log(autocomplete)
-  }
+    self.initAutocomplete = function() {
+      var autocomplete = new google.maps.places.Autocomplete(input, options)
+      console.log(autocomplete)
+    }
 
 
     // get a random street view from the seeds
@@ -59,14 +59,14 @@ function PositionsController($window, $scope, Position){
         linksControl: false,
       }); 
 
-    country = (self.all[index]).country;
-    console.log(country);  
+      country = (self.all[index]).country;
+      console.log(country);  
 
-    city = (self.all[index]).city;
-    console.log(city); 
+      city = (self.all[index]).city;
+      console.log(city); 
 
       // check if the answer country is correct
-     self.matchCountry = function(country) {
+      self.matchCountry = function(country) {
 
         country = (self.all[index]).country;
         console.log(country);  
@@ -83,13 +83,13 @@ function PositionsController($window, $scope, Position){
           console.log("Sorry, please try again");
         }
 
-        };
+      };
 
       // check if the answer city is correct
-    self.matchCity = function(city) { 
+      self.matchCity = function(city) { 
 
-      city = (self.all[index]).city;
-      console.log("this",city); 
+        city = (self.all[index]).city;
+        console.log("this",city); 
 
         if (city  === self.cityinput){
           console.log("Well done !");
@@ -98,52 +98,52 @@ function PositionsController($window, $scope, Position){
         } else {
           console.log("Sorry, wrong city")
         }
-        }; 
+      }; 
 
     }
 
     self.getPanorama(); 
 
 
-  // start the big clock 
-  self.startClock = function() {
-    console.log("start clock");
-    self.showscreen = false;
-    self.newcountryinput = false;
-    self.welcomescreen = true;
+    // start the big clock 
+    self.startClock = function() {
+      console.log("start clock");
+      self.showscreen = false;
+      self.newcountryinput = false;
+      self.welcomescreen = true;
 
 
-    timer = setInterval(function(){
-      time -= 1;
+      timer = setInterval(function(){
+        time -= 1;
 
-      minutes = Math.floor(time / 60);
-      seconds = time % 60;
+        minutes = Math.floor(time / 60);
+        seconds = time % 60;
 
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      
-      if(time === 0) {
-        console.log("Play Again");
-        self.showscreen = true;
-        self.welcomescreen = false;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        
+        if(time === 0) {
+          console.log("Play Again");
+          self.showscreen = true;
+          self.welcomescreen = false;
 
-        self.newcountryinput = false;
-        self.getPanorama();
-        score.push(self.playerScore);
-        console.log(score);
-      }
+          self.newcountryinput = false;
+          self.getPanorama();
+          Score.save({ score: self.playerScore, user: tokenService.getUser()._id }, function(savedScore){
+            $scope.$applyAsync(function() {
+              self.scores.push({ score: self.playerScore, user: tokenService.getUser() });
+            });
+          });
+        }
 
-      if (time > 0){
+        if (time > 0){
           $('.progress-bar').css('width', time+'%');
         } else {
           clearTimeout(timer);
         }
 
-    }, 1000)
-  }
-    
-
-
+      }, 1000)
+    }
   });
 
 }

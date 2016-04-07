@@ -16,10 +16,10 @@ function UserController($auth, tokenService, User) {
   this.currentUser = tokenService.getUser();
 
   this.authenticate = function(provider) {
-    $auth.authenticate(provider)
-      .then(function() {
-        self.currentUser = tokenService.getUser();
-      });
+    $auth.authenticate(provider).then(function() {
+      self.currentUser = tokenService.getUser();
+      console.log(self.currentUser)
+    });
   }
 
   this.logout = function() {
