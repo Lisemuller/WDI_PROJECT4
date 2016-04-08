@@ -11,25 +11,25 @@ Position.create([{
   country: "Turkey",
   city: "Istanbul",
 },{
-  lat: 22.818777,
-  lng: 89.547000,
-  country: "Bangladesh",
-  city: "Dhaka",
+  lat: 1.285872,
+  lng: 103.854256,
+  country: "Singapore",
+  city: "Singapore",
 },{
-  lat: 37.589846,
-  lng: 127.096803,
-  country: "South Korea",
-  city: "Seoul",
+  lat: 25.195288,
+  lng: 55.276433,
+  country: "United Arab Emirates",
+  city: "Dubai",
 },{
-  lat: 46.229725,
-  lng: 15.154129,
-  country: "Slovenia",
-  city: "Ljubljana",
+  lat: 45.434426,
+  lng: 12.334747,
+  country: "Italy",
+  city: "Venice",
 },{
-  lat: 47.930324,
-  lng: 106.911599,
-  country: "Mongolia",
-  city: "Oulan-Bator",
+  lat: 48.861847,
+  lng: 2.289974,
+  country: "France",
+  city: "Paris",
 }]
 
 , function(err, positions) {
@@ -37,3 +37,4 @@ Position.create([{
   else console.log(positions);
   mongoose.connection.close();
 });
+
