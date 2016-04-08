@@ -102,6 +102,12 @@ img.pp {
   margin-left: 147px;
 }
 
+.instruction {
+  height: 150px;
+  width : 400px;
+  overflow: -y : scroll;
+}
+
 p{
   color: #415b93;
 }

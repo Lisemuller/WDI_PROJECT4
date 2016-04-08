@@ -88,6 +88,8 @@ function PositionsController($window, $scope, Position, Score, tokenService){
         panorama.setPosition(getLatLng(self.currentPlace));
         self.cityinput="";
         self.countryinput="";
+        self.newcityinput = true;
+        self.errormessagecity = true;
       } else {
         console.log("Sorry, wrong city")
         self.errormessagecity = false;
