@@ -17,9 +17,6 @@ app.use(express.static(__dirname + '/public'));
 // Setup database
 var databaseURL    = process.env.MONGOLAB_URI || 'mongodb://localhost/wordie';
 
-var mongoUri =  process.env.MONGOLAB_URI || 'mongodb://localhost/wordie';
-moongoose.connect(mongoUri);
-
 // Connect to database
 mongoose.connect(databaseURL);
 
