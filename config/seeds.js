@@ -1,7 +1,6 @@
 var Position = require('../models/position');
-var mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/wordie');
+var databaseURL    = process.env.MONGODB_URI || 'mongodb://localhost/wordie';
+mongoose.connect(databaseURL);
 
 Position.collection.drop();
 
