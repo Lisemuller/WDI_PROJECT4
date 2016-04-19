@@ -48,7 +48,7 @@ function PositionsController($window, $scope, Position, Score, tokenService){
     });
 
   self.Play = function() {
-    time = 100;
+    // time = 100;
     self.countryinput = "";
     self.cityinput = "";
     self.newcityinput = true;
@@ -132,7 +132,6 @@ function PositionsController($window, $scope, Position, Score, tokenService){
         
         if(time === 0) {
           console.log("Play Again");
-          time = 100;
           self.errormessage = true;
           self.errormessagecity = true;
           self.showscreen = true;
