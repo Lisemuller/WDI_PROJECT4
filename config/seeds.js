@@ -1,4 +1,4 @@
-var Position = require('../models/position');
+var Position = require('../models/Position');
 var databaseURL    = process.env.MONGODB_URI || 'mongodb://localhost/wordie';
 mongoose.connect(databaseURL);
 
