@@ -112,6 +112,7 @@ function PositionsController($window, $scope, Position, Score, tokenService){
 
     // start the big clock 
     self.startClock = function() {
+      time = 100;
       console.log("start clock");
       self.showscreen = false;
       self.newcountryinput = false;
