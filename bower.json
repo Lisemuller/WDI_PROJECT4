@@ -1,0 +1,28 @@
+{
+  "name": "worldie",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Lise Muller <lisemuller@hotmail.fr>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Lisemuller/WDI_PROJECT4",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "^1.0.7",
+    "angular": "^1.5.5",
+    "bootstrap": "^3.3.6",
+    "angular-ui-router": "^0.2.18"
+  },
+  "resolutions": {
+    "angular": "^1.5.3"
+  }
+}

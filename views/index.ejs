@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html ng-app="WorldieApp">
+<head>
+  <meta charset="utf8">
+  <title>Worldie</title>
+
+  <!-- External JS Resources -->
+  <script src="/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/vendor/angular/angular.min.js"></script>
+  <script src="/vendor/angular-resource/angular-resource.min.js"></script>  
+  <script src="/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>  
+  <script src="/vendor/angular-jwt/dist/angular-jwt.min.js"></script>
+  <script src="/vendor/satellizer/satellizer.min.js"></script>
+  <script src="/js/jquery-panorama/jquery.panorama_viewer.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q&libraries=places&language=en"></script>
+
+
+
+  <!-- Internal JS Resources -->
+  <script src="/js/client.js"></script>
+  <script src="/js/controllers/users.js"></script>
+  <script src="/js/controllers/positions.js"></script>
+  <script src="/js/controllers/scores.js"></script>
+  <script src="/js/services/oauthKeys.js"></script>
+  <script src="/js/services/token.js"></script>
+  <script src="/js/models/position.js"></script>
+  <script src="/js/models/user.js"></script>
+  <script src="/js/models/score.js"></script>
+  <script src="/js/directives/googleplace.js"></script>
+
+  <!-- Style -->
+  <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/css/panorama_viewer.css" media="screen" title="no title" charset="utf-8">
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body ng-controller="UserController as user">
+
+  <div ng-hide="user.isLoggedIn()">
+    <div class="panorama">
+      <img class="background" ng-src="./images/london_at_night_panorama-wallpaper-5120x1600.jpg">
+      <button class="facebook" ng-click="user.authenticate('facebook')"><i class="fa fa-facebook-square"></i> Sign in with Facebook to play ! </button>
+      <div class="splash-logo"><h1>Landmark</h1></div>
+    </div>
+  </div>
+
+
+  <div ng-show="user.isLoggedIn()">
+
+    <div ng-controller="PositionsController as position">
+      <div class="topscreen">
+        <nav>
+          <div class="imagecontainer" id="block">
+            <img class="pp" ng-src="{{ user.currentUser.picture }}">
+            <p id="userscore">{{ position.playerScore }}</p>
+            <a class="logout" href="" ng-click="user.logout()">Log Out</a>
+          </div>
+          <div class="scores" id="block"> 
+            <ul class="list-group">
+              <li class="list-group-item"><h3>Best Scores</h3></li>
+              <li class="list-group-item" ng-repeat="score in position.scores"><strong>{{ score.user.name }}</strong><span class="badge">{{ score.score }}</span></li>
+            </ul>
+          </div>
+
+          <div class="answercontainer" id="block">
+
+            <input class="form-control" ng-hide="position.newcountryinput" placeholder="Enter country name here" ng-model="position.countryinput" type="text" place-changed="position.matchCountry()" types="['(regions)']" googleplace>
+          
+
+            <div class="error ng-hide alert alert-warning" role="alert" ng-hide="position.errormessage">  
+              <p>Wrong country, try again to go to the next panorama</p>
+            </div>
+      
+            <input class="form-control" ng-hide="position.newcityinput" placeholder="Enter city name here" ng-model="position.cityinput" type="text" place-changed="position.matchCity()" types="['(cities)']" googleplace>
+
+            <div class="errorcity ng-hide alert alert-warning" role="alert" ng-hide="position.errormessagecity">
+              <p>Wrong city, try again or click next to try to guess a new country</p>
+            </div>
+
+          </div>
+
+          <div class="instruction" ng-hide="position.instruction" id="block">
+            <p>Guess where you are in the world by looking around the panorama, and try to find as many as you can in 1min30 ! 
+            Find the country to win one point, and click on "Next" to try to guess the next panorama ... and win a bonus point if you find the city ! </p>
+          </div>
+
+        </nav>
+
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+          <span class="sr-only">60% Complete</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="street-view"></div>
+    
+
+        <div id="welcomescreen" class="ng-hide" ng-hide="position.welcomescreen">
+          <h1>Landmark</h1>
+          <button ng-click="position.startClock()"class="play">Start</button>
+        </div>
+
+        <button class="next" ng-hide="position.nextbutton" ng-click="position.next()">Next</button>
+
+        <button class="logout" ng-click="user.logout()">Logout</button>
+
+
+    </div>
+
+  </div>
+
+
+
+
+  </body>
+</html>
