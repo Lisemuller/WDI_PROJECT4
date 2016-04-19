@@ -1,6 +1,6 @@
 angular
   .module('WorldieApp', ['ngResource', 'ui.router', 'angular-jwt','satellizer'])
-  .constant('API', 'http://localhost:3000/api')
+  .constant('API', '/api')
   .config(oauthConfig);
 
 angular.element(document).ready(function () {
