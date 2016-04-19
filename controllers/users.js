@@ -1,4 +1,4 @@
-var User = require('../models/user');
+var User = require('../models/User');
 
 function usersIndex(req, res) {
   User.find(req.query, function(err, users) {

@@ -1,4 +1,4 @@
-var Score = require('../models/score');
+var Score = require('../models/Score');
 
 function ScoresIndex(req, res) {
   Score.find(req.query, null, { sort: '-score' }).populate('user').limit(10).exec(function(err, scores) {

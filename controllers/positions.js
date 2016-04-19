@@ -1,4 +1,4 @@
-var Position = require('../models/position');
+var Position = require('../models/Position');
 
 function positionsIndex(req, res) {
   Position.find(req.query, function(err, positions) {
