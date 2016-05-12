@@ -129,6 +129,7 @@ button {
   font-weight: 400; }
   button.facebook {
     margin-top: 45px;
+    margin-right: 10vw;
     background: #46629E;
     border: 1px solid #3e578c; }
     button.facebook:hover {
