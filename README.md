@@ -1,7 +1,5 @@
 # WDI_PROJECT4
 
-# WDI_PROJECT-1
-
 ![](http://imgur.com/qnzmeJA.png)
 
 #[Landmark](https://landmarks-view.herokuapp.com/)
