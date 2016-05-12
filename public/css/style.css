@@ -135,6 +135,12 @@ button {
     button.facebook:hover {
       background: #415b93; }
 
+@media screen and (max-width: 1226px){
+ .facebook {
+  margin-right: 20%;
+ }
+}
+
 button.play {
   background: #58B09C;
   border: 1px solid #3e578c; }
